@@ -1,0 +1,497 @@
+#include<windows.h>
+#include <GL/glut.h>
+#include <stdio.h>
+#include <GL/gl.h>
+#include <math.h>
+
+GLfloat	tx	=  0.0;
+GLfloat	ty	=  0.0;
+
+
+static float	car_run	=  0.0;
+static float	car_run2 =  0.0;
+static float	boat_move =  0.0;
+static float	cloud_right =  0.0;
+static float	cloud_left =  0.0;
+static float	plane_move =  0.0;
+float t=0;
+
+
+void init(void)
+{
+  glClearColor(0.0,0.0,0.0,0.0);
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  glOrtho(-50,50,-50,25,-25,5);
+
+}
+
+void circle(GLfloat rx,GLfloat ry,GLfloat cx,GLfloat cy)
+{
+
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(cx,cy);
+
+    for(int i=0;i<=100;i++)
+
+    {
+        float angle = 2.0f * 3.1416f * i/100;
+
+        float x = rx * cosf(angle);
+        float y = ry * sinf(angle);
+
+        glVertex2f((x+cx),(y+cy));
+    }
+    glEnd();
+
+}
+
+
+//Car1
+void car()
+    {glPushMatrix();
+    glColor4f(1.0f, 1.0f, 1.0f, 0.0f);//white
+
+    glTranslatef(tx,ty,0);
+    glBegin(GL_QUADS);
+        glVertex2d(-42.0,-48.0);
+        glVertex2d(-19.0, -48.0);
+        glVertex2d(-19.0, -43.0);
+        glVertex2d(-42.0,-43.0);
+    glEnd();
+    glBegin(GL_QUADS);
+        glVertex2d(-37.0,-39.0);
+        glVertex2d(-39.0,-43.0);
+        glVertex2d(-22.0, -43.0);
+        glVertex2d(-24.0, -39.0);
+    glEnd();
+    glColor3f(0.0f, 0.0f, 0.0f);//Black
+     glBegin(GL_QUADS);
+        glVertex2d(-36.0,-40.0);
+        glVertex2d(-38.0,-44.0);
+        glVertex2d(-23.0, -44.0);
+        glVertex2d(-25.0, -40.0);
+    glEnd();
+    glColor4f(1.0f, 1.0f, 1.0f, 0.0f);//white
+     glBegin(GL_QUADS);
+        glVertex2d(-31.0,-44.0);
+        glVertex2d(-29.0,-44.0);
+        glVertex2d(-29.0, -40.0);
+        glVertex2d(-31.0, -40.0);
+    glEnd();
+     glColor3f(0.0f,0.0f,0.0f);
+    circle(2.5,2.5,-36,-47);
+    circle(2.5,2.5,-26,-47);
+
+    glColor3ub(247, 244, 245);
+    circle(1,1,-36,-47);
+    circle(1,1,-26,-47);
+    //circle(4,4);
+    glPopMatrix();
+    }
+
+    
+//Car2
+void car2()
+    {glPushMatrix();
+    glColor4f(1.0f, 0.0f, 0.0f, 0.0f);//red
+
+    glTranslatef(tx,ty,0);
+    glBegin(GL_QUADS);
+        glVertex2d(-22.0,-40.0);
+        glVertex2d(1.0, -40.0);
+        glVertex2d(1.0, -35.0);
+        glVertex2d(-22.0,-35.0);
+    glEnd();
+    glBegin(GL_QUADS);
+        glVertex2d(-17.0,-31.0);
+        glVertex2d(-19.0,-35.0);
+        glVertex2d(-2.0, -35.0);
+        glVertex2d(-4.0, -31.0);
+    glEnd();
+     glColor3f(0.0f,0.0f,0.0f);
+     glBegin(GL_QUADS);
+        glVertex2d(-16.0,-32.0);
+        glVertex2d(-18.0,-36.0);
+        glVertex2d(-3.0, -36.0);
+        glVertex2d(-5.0, -32.0);
+    glEnd();
+    glColor4f(1.0f, 0.0f, 0.0f, 0.0f);//red
+     glBegin(GL_QUADS);
+        glVertex2d(-11.5,-36.0);
+        glVertex2d(-9.5,-36.0);
+        glVertex2d(-9.5, -32.0);
+        glVertex2d(-11.5, -32.0);
+    glEnd();
+     glColor3f(0.0f,0.0f,0.0f);
+    circle(2.5,2.5,-14.7,-39);
+    circle(2.5,2.5,-4.7,-39);
+
+    glColor3ub(247, 244, 245);
+    circle(1,1,-14.7,-39);
+    circle(1,1,-4.7,-39);
+    //circle(4,4);
+    glPopMatrix();
+    }
+
+
+void boat(){
+//Boat1
+    glColor3f(0.1f, 0.1f, 0.1f);//Dark grey
+
+   glBegin(GL_POLYGON);
+   glVertex2f(-5 ,-30);
+   glVertex2f(10 ,-30);
+   glVertex2f(15 ,-25);
+   glVertex2f(-5 ,-25);
+   glEnd();
+
+   glColor3f(0.0f, 0.5f, 0.5f);//Blue-Green
+
+
+   glBegin(GL_POLYGON);
+   glVertex2f(-3 ,-25);
+   glVertex2f(11 ,-25);
+   glVertex2f(9 ,-22);
+   glVertex2f(-3 ,-22);
+   glEnd();
+
+  glColor3f(0.0f, 0.1f, 0.0f);//Forest Green
+
+
+   glBegin(GL_POLYGON);
+   glVertex2f(-1.5 ,-24.5);
+   glVertex2f(0.5 ,-24.5);
+   glVertex2f(0.5 ,-22.5);
+   glVertex2f(-1.5 ,-22.5);
+   glEnd();
+
+   glColor3f( 0.0 ,1.0, 0.0);
+   glBegin(GL_POLYGON);
+   glVertex2f(2.5 ,-24.5);
+   glVertex2f(4.5 ,-24.5);
+   glVertex2f(4.5 ,-22.5);
+   glVertex2f(2.5 ,-22.5);
+   glEnd();
+
+   glColor4f(1.0f, 1.0f, 1.0f, 0.0f);//white
+
+
+   glBegin(GL_POLYGON);
+   glVertex2f(6.5 ,-24.5);
+   glVertex2f(8.5 ,-24.5);
+   glVertex2f(8.5 ,-22.5);
+   glVertex2f(6.5 ,-22.5);
+   glEnd();
+
+   glColor3f( 0.0 ,1.0, 1.0);
+   glBegin(GL_POLYGON);
+   glVertex2f(-1.5 ,-22);
+   glVertex2f(7.5 ,-22);
+   glVertex2f(6 ,-19);
+   glVertex2f(-1.5 ,-19);
+   glEnd();
+
+   glColor3f( 1.0 ,0.5, 0.0);
+   glBegin(GL_POLYGON);
+   glVertex2f(-0.5 ,-21.5);
+   glVertex2f(1.5 ,-21.5);
+   glVertex2f(1.5 ,-19.5);
+   glVertex2f(-0.5 ,-19.5);
+   glEnd();
+
+   glColor3f( 1.0 ,0.0, 0.5);
+   glBegin(GL_POLYGON);
+   glVertex2f(3 ,-21.5);
+   glVertex2f(5 ,-21.5);
+   glVertex2f(5 ,-19.5);
+   glVertex2f(3 ,-19.5);
+   glEnd();
+
+}
+
+void boat_Move(){
+    boat_move=boat_move+0.02;
+    if (boat_move>80)
+        boat_move=-80;
+    glutPostRedisplay();
+
+
+}
+
+
+void car_Run()
+{
+    car_run=car_run+0.03;
+    if (car_run>100)
+        car_run=-70;
+    glutPostRedisplay();
+}
+
+void car_Run2()
+{
+    car_run2=car_run2-0.03;
+    if (car_run2<-100)
+        car_run2=70;
+    glutPostRedisplay();
+}
+
+
+void river(){
+//river
+	glPushMatrix();
+	glTranslatef(0.0f, 10.0f, 0.0f);
+	glRotatef(0, 0.0f, 0.0f, -1.0f);
+
+	 glColor3f(0.0,0.2,0.5);
+	glBegin(GL_POLYGON);
+	glVertex2f(-50,-50);
+	glVertex2f(50,-50);
+	glVertex2f(50,-30);
+	glVertex2f(-50,-30);
+	glEnd();
+
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0.0f, 8.0f, 0.0f);
+	glRotatef(0, 0.0f, 0.0f, -1.0f);
+
+	 glColor3f(0.0,0.5,0.7);
+	glBegin(GL_POLYGON);
+	glVertex2f(-50,-50);
+	glVertex2f(50,-50);
+	glVertex2f(50,-30);
+	glVertex2f(-50,-30);
+	glEnd();
+
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0.0f, 6.0f, 0.0f);
+	glRotatef(0, 0.0f, 0.0f, -1.0f);
+
+	 glColor3f(0.0,0.4,0.7);
+	glBegin(GL_POLYGON);
+	glVertex2f(-50,-50);
+	glVertex2f(50,-50);
+	glVertex2f(50,-30);
+	glVertex2f(-50,-30);
+	glEnd();
+
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0.0f, 4.0f, 0.0f);
+	glRotatef(0, 0.0f, 0.0f, -1.0f);
+
+	 glColor3f(0.0,0.3,0.6);
+	glBegin(GL_POLYGON);
+	glVertex2f(-50,-50);
+	glVertex2f(50,-50);
+	glVertex2f(50,-30);
+	glVertex2f(-50,-30);
+	glEnd();
+
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0.0f, 2.0f, 0.0f);
+	glRotatef(0, 0.0f, 0.0f, -1.0f);
+
+	 glColor3f(0.0,0.2,0.5);
+	glBegin(GL_POLYGON);
+	glVertex2f(-50,-50);
+	glVertex2f(50,-50);
+	glVertex2f(50,-30);
+	glVertex2f(-50,-30);
+	glEnd();
+
+	glPopMatrix();
+
+}
+
+void Front_Wall(){
+//Front Wall
+
+       glColor3f(0.5f, 1.0f, 1.0f);//cyan
+
+	glBegin(GL_POLYGON);
+	glVertex2f(-50,-35);
+	glVertex2f(50,-35);
+	glVertex2f(50,-32);
+	glVertex2f(-50,-32);
+	glEnd();
+
+
+	float m = 0;
+	for(m=0;m<=50.0;m++){
+        glColor4f(1.0f, 1.0f, 0.0f, 0.0f);//yellow
+        glBegin(GL_POLYGON);
+        glVertex2f(m,-32);
+        glVertex2f(m+1,-32);
+        glVertex2f(m+0.50,-30.5);
+        glEnd();
+        //x = x+0.5;
+	}
+
+    float n =-50;
+    for(n=0;n>=-50.0;n--){
+        glColor4f(1.0f, 1.0f, 0.0f, 0.0f);//yellow
+        glBegin(GL_POLYGON);
+        glVertex2f(n,-32);
+        glVertex2f(n-1,-32);
+        glVertex2f(n-0.50,-30.5);
+        glEnd();
+    }
+}
+
+
+void Road(){
+//Road
+
+   glColor3ub(22, 21, 21);
+     glBegin(GL_QUADS);
+      glVertex2d(-50,-50);
+      glVertex2d(50,-50);
+      glVertex2d(50,-35);
+      glVertex2d(-50,-35);
+    glEnd();
+
+    glColor3ub(255, 255, 255);
+     glBegin(GL_QUADS);
+      glVertex2d(-50,-43.5);
+      glVertex2d(-45,-43.5);
+      glVertex2d(-45,-41.5);
+      glVertex2d(-50,-41.5);
+    glEnd();
+
+    glColor3ub(255, 255, 255);
+     glBegin(GL_QUADS);
+      glVertex2d(-35,-43.5);
+      glVertex2d(-25,-43.5);
+      glVertex2d(-25,-41.5);
+      glVertex2d(-35,-41.5);
+    glEnd();
+
+    glColor3ub(255, 255, 255);
+     glBegin(GL_QUADS);
+      glVertex2d(-15,-43.5);
+      glVertex2d(-05,-43.5);
+      glVertex2d(-05,-41.5);
+      glVertex2d(-15,-41.5);
+    glEnd();
+
+    glColor3ub(255, 255, 255);
+     glBegin(GL_QUADS);
+      glVertex2d(05,-43.5);
+      glVertex2d(15,-43.5);
+      glVertex2d(15,-41.5);
+      glVertex2d(05,-41.5);
+    glEnd();
+
+    glColor3ub(255, 255, 255);
+     glBegin(GL_QUADS);
+      glVertex2d(25,-43.5);
+      glVertex2d(35,-43.5);
+      glVertex2d(35,-41.5);
+      glVertex2d(25,-41.5);
+    glEnd();
+
+    glColor3ub(255, 255, 255);
+     glBegin(GL_QUADS);
+      glVertex2d(45,-43.5);
+      glVertex2d(50,-43.5);
+      glVertex2d(50,-41.5);
+      glVertex2d(45,-41.5);
+    glEnd();
+
+
+}
+
+
+void Day()
+{  glClear(GL_COLOR_BUFFER_BIT);
+
+
+	//river
+    river();
+
+    //Road
+    Road();
+
+    //Front Wall
+    Front_Wall();
+
+    car_Run2();
+   for(int i=0; i<1; i++)
+   {
+       glPushMatrix();
+       glTranslatef(car_run2+i,0,0);
+       car2();
+       glPopMatrix();
+   }
+
+    car_Run();
+   for(int i=0; i<1; i++)
+   {
+       glPushMatrix();
+       glTranslatef(car_run+i,0,0);
+       car();
+       glPopMatrix();
+   }
+
+   boat_Move();
+   for(int i=0; i<1; i++)
+   {
+       glPushMatrix();
+       glTranslatef(boat_move+i,0,0);
+       boat();
+       glPopMatrix();
+   }
+
+glutSwapBuffers();
+
+
+}
+
+
+void spe_key(int key, int x, int y)
+{
+
+	switch (key) {
+
+		case GLUT_KEY_UP:
+				//ty +=5;
+				PlaySound("sweet_tone.wav", NULL, SND_ASYNC|SND_FILENAME);
+				t=1;
+
+glutPostRedisplay();
+				break;
+
+        case GLUT_KEY_DOWN:
+				//ty +=5;
+				PlaySound(NULL, NULL, 0);
+				t=0;
+                glutPostRedisplay();
+				break;
+
+        default:
+			break;
+	}
+}
+
+
+int main(int argc,char **argv){
+    glutInit(&argc,argv);
+    glutInitDisplayMode ( GLUT_RGB | GLUT_DOUBLE );
+    glutInitWindowPosition(30,0);
+    glutInitWindowSize(1000,650);
+    glutCreateWindow("Cool City");
+    init();
+    glutSpecialFunc(spe_key);
+    glutDisplayFunc(Day);
+    //glutKeyboardFunc(handleKeypress);
+    glutMainLoop();
+    return 0;
+}
